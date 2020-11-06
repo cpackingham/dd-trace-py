@@ -654,14 +654,8 @@ jobs:
       - image: *ddtrace_dev_image
       - *httpbin_local
     steps:
-      - run_tox_scenario:
-          pattern: '^requests_contrib\(_autopatch\)\?-'
-
-  requestsgevent:
-    <<: *contrib_job
-    steps:
-      - run_tox_scenario:
-          pattern: '^requests_gevent_contrib-'
+      - run_test:
+          pattern: "requests"
 
   sanic:
     <<: *contrib_job
@@ -787,14 +781,6 @@ jobs:
             tox -e 'benchmarks-{py27,py35,py36,py37,py38}'
       - save_tox_cache
 
-  build_wheels:
-    <<: *machine_executor
-    steps:
-      - checkout
-      - *pyenv-set-global
-      - run: pip install cython
-      - run: scripts/build-dist
-
   deploy_master:
     # build the master branch releasing development docs and wheels
     <<: *machine_executor
@@ -909,7 +895,6 @@ requires_tests: &requires_tests
   - redis
   - rediscluster
   - requests
-  - requestsgevent
   - sqlalchemy
   - sqlite3
   - starlette
@@ -961,7 +946,6 @@ workflows:
       - test_build_win_py37: *requires_pre_test
       - test_build_win_py36: *requires_pre_test
       - test_build_win_py35: *requires_pre_test
-      - build_wheels: *requires_pre_test
 
       # Integration test suites
       - aiobotocore: *requires_pre_test
@@ -1012,7 +996,6 @@ workflows:
       - redis: *requires_pre_test
       - rediscluster: *requires_pre_test
       - requests: *requires_pre_test
-      - requestsgevent: *requires_pre_test
       - sanic: *requires_pre_test
       - starlette: *requires_pre_test
       - sqlalchemy: *requires_pre_test

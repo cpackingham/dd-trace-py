@@ -17,6 +17,8 @@ services:
         image: consul:1.6.0
         ports:
             - "127.0.0.1:8500:8500"
+    httpbin:
+      image: kennethreitz/httpbin@sha256:2c7abc4803080c22928265744410173b6fea3b898872c01c5fd0f0f9df4a59fb
     postgres:
         image: postgres:10.5-alpine
         environment:

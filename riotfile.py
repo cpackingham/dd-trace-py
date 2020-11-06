@@ -115,4 +115,87 @@ suites = [
             ),
         ],
     ),
+    Suite(
+        name="requests",
+        command="pytest tests/contrib/requests",
+        cases=[
+            Case(
+                pys=[2.7, 3.5, 3.6, 3.7, 3.8, 3.9,],
+                pkgs=[
+                    ("requests-mock", [">=1.4"]),
+                    (
+                        "requests",
+                        [
+                            ">=2.8,<2.9",
+                            ">=2.10,<2.11",
+                            ">=2.12,<2.13",
+                            ">=2.14,<2.15",
+                            ">=2.16,<2.17",
+                            ">=2.18,<2.19",
+                            ">=2.20,<2.21",
+                            "",
+                        ],
+                    ),
+                ],
+            ),
+        ],
+    ),
+    Suite(
+        name="requests_gevent",
+        command="pytest tests/contrib/requests/test_requests_gevent.py",
+        cases=[
+            Case(
+                env=[("TEST_GEVENT", "1")],
+                pys=[3.6],
+                pkgs=[
+                    ("requests-mock", [">=1.4"]),
+                    (
+                        "requests",
+                        [
+                            ">=2.8,<2.9",
+                            ">=2.10,<2.11",
+                            ">=2.12,<2.13",
+                            ">=2.14,<2.15",
+                            ">=2.16,<2.17",
+                            ">=2.18,<2.19",
+                            ">=2.20,<2.21",
+                            "",
+                        ],
+                    ),
+                    ("gevent", [">=1.2,<1.3", ">=1.3,<1.4"]),
+                ],
+            ),
+            Case(
+                env=[("TEST_GEVENT", "1")],
+                pys=[3.7, 3.8],
+                pkgs=[
+                    ("requests-mock", [">=1.4"]),
+                    (
+                        "requests",
+                        [
+                            ">=2.8,<2.9",
+                            ">=2.10,<2.11",
+                            ">=2.12,<2.13",
+                            ">=2.14,<2.15",
+                            ">=2.16,<2.17",
+                            ">=2.18,<2.19",
+                            ">=2.20,<2.21",
+                            "",
+                        ],
+                    ),
+                    ("gevent", [">=1.3,<1.4"]),
+                ],
+            ),
+        ],
+    ),
+    Suite(
+        name="requests_autopatch",
+        command="pytest tests/contrib/requests",
+        cases=[
+            Case(
+                pys=[2.7, 3.5, 3.6, 3.7, 3.8, 3.9],
+                pkgs=[("tornado", [">=4.4,<4.5", ">=4.5,<4.6"])],
+            ),
+        ],
+    ),
 ]

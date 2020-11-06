@@ -1,14 +1,19 @@
+import os
 import subprocess
 import sys
-import unittest
+
+import pytest
+
+from tests import TracerTestCase
 
 
-class TestRequestsGevent(unittest.TestCase):
+@pytest.mark.skipif("TEST_GEVENT" not in os.environ, reason="Only relevant with gevent installed")
+class TestRequestsGevent(TracerTestCase):
     def test_patch(self):
         # Since this test depends on import ordering it is run in a separate
         # process with a fresh interpreter.
         p = subprocess.Popen(
-            [sys.executable, "tests/contrib/requests_gevent/run_test.py"],
+            [sys.executable, "tests/contrib/requests/run_test.py"],
             stdout=subprocess.PIPE,
             stderr=subprocess.PIPE,
         )
